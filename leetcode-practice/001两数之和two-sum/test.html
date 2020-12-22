@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var twoSum = function (nums, target) {
+            const len = nums.length;
+            for (let i = 0; i < len; i++) {
+                let preItem = nums[i];
+                for (let j = i + 1; j < len; j++) {
+                    let reaItem = nums[j];
+                    if (preItem + reaItem === target)
+                        return [i, j];
+                }
+            }
+        };
+        let result = twoSum([2, 7, 11, 15], 9);
+        console.log(result);
+    </script>
+</body>
+
+</html>

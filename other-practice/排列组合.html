@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const ARR = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        const arr = [1, 2, 4, 8, 16, 32, 64];
+        const obj = [
+            {
+                text: '周一',
+                week: '1'
+            }, {
+                text: '周二',
+                week: '2'
+            }, {
+                text: '周三',
+                week: '4'
+            }, {
+                text: '周四',
+                week: '8'
+            }, {
+                text: '周五',
+                week: '16'
+            }, {
+                text: '周六',
+                week: '32'
+            }, {
+                text: '周日',
+                week: '64'
+            }, {
+                text: '周一周二',
+                week: '3'
+            }, {
+                text: '周一周三',
+                week: '5'
+            }, {
+                text: '周一周四',
+                week: '9'
+            }, {
+                text: '周一周五',
+                week: '17'
+            }, {
+                text: '周一周六',
+                week: '33'
+            }, {
+                text: '周一周日',
+                week: '65'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }, {
+                text: '周一周二周三',
+                week: '7'
+            }
+        ]
+        function getNumbers(source, count, isPermutation = true) {
+            // 遍历源数组，输出一维数组
+            let currentList = source.map((item) => [item]);
+            //如果只取一位，返回数组中的所有项，例如 [ [1], [2], [3] ]
+            if (count === 1) {
+                return currentList;
+            }
+            let result = [];
+            //取出第一项后，再取出后面count - 1 项的排列组合，并把第一项的所有可能（currentList）和 后面count-1项所有可能交叉组合
+            for (let i = 0; i < currentList.length; i++) {
+                let current = currentList[i];
+                //如果是排列的方式，在取count-1时，源数组中排除当前项
+                let children = [];
+                if (isPermutation) {
+                    children = getNumbers(source.filter(item => item !== current[0]), count - 1, isPermutation);
+                }
+                //如果是组合的方法，在取count-1时，源数组只使用当前项之后的
+                else {
+                    children = getNumbers(source.slice(i + 1), count - 1, isPermutation);
+                }
+                for (let child of children) {
+                    result.push([...current, ...child]);
+                }
+            }
+            return result;
+        }
+        for (let i = 1; i <= ARR.length; i++) {
+            // 排列方式
+            let permutation = getNumbers(ARR, i);
+            // 组合方式
+            let combination = getNumbers(ARR, i, false)
+            console.log(getNumbers(ARR, i, false));
+            console.log(getNumbers(ARR, i));
+        }
+    </script>
+
+</body>
+
+</html>
