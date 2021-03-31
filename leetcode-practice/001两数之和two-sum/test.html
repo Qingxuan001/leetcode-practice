@@ -1,3 +1,12 @@
+<!--
+ * @Author: huohuoit
+ * @Date: 2021-03-26 14:35:36
+ * @Description: Get it !
+ * @LastEditors: huohuoit
+ * @LastEditTime: 2021-03-31 20:49:14
+ * @Github: https://github.com/Qingxuan001
+ * @FilePath: \series-of-hand-writinge:\个人学习资料\leetcode-practice\leetcode-practice\001两数之和two-sum\test.html
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,17 +18,22 @@
 
 <body>
     <script>
-        var twoSum = function (nums, target) {
-            const len = nums.length;
-            for (let i = 0; i < len; i++) {
-                let preItem = nums[i];
-                for (let j = i + 1; j < len; j++) {
-                    let reaItem = nums[j];
-                    if (preItem + reaItem === target)
-                        return [i, j];
+        var twoSum = (nums, target) => {
+            // 1. 构造 Map 数据结构
+            const map = new Map(); // 存储方式 {key, index}
+            // 2. 遍历数组
+            for (let i = 0; i < nums.length; i++) {
+                // 2.1 如果找到 target - nums[i] 的值
+                let diff = target - nums[i];
+                if (map.has(diff)) {
+                    // 返回下标数组
+                    return [map.get(diff), i];
+                } else {
+                    // 2.2 如果没找到则把[该数组元素值，该元素在原数组的下标值]存入 map 结构
+                    map.set(nums[i], i);
                 }
             }
-        };
+        }
         let result = twoSum([2, 7, 11, 15], 9);
         console.log(result);
     </script>
