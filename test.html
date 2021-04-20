@@ -3,7 +3,7 @@
  * @Date: 2021-03-31 11:09:14
  * @Description: Get it !
  * @LastEditors: huohuoit
- * @LastEditTime: 2021-03-31 11:49:20
+ * @LastEditTime: 2021-04-20 19:50:52
  * @Github: https://github.com/Qingxuan001
  * @FilePath: \series-of-hand-writinge:\个人学习资料\leetcode-practice\test.html
 -->
@@ -19,7 +19,22 @@
 
 <body>
     <script>
-        
+
+        const nums1 = [4, 9, 5];
+        const nums2 = [9, 4, 9, 8, 4];
+        const intersection = function (nums1, nums2) {
+            let arr = [];
+            for (let i = 0; i < nums1.length; i++) {
+                for (let j = 0; j < nums2.length; j++) {
+                    if (nums1[i] === nums2[j]) {
+                        arr.push(nums1[i]);
+                    }
+                }
+            }
+            arr = [...new Set(arr)];  // 去重
+            return arr;
+        };
+        console.log(intersection(nums1, nums2));
     </script>
 </body>
 
