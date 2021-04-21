@@ -3,7 +3,7 @@
  * @Date: 2021-04-20 17:27:03
  * @Description: leetcode-349--两个数组的交集  腾讯
  * @LastEditors: huohuoit
- * @LastEditTime: 2021-04-20 21:28:31
+ * @LastEditTime: 2021-04-21 14:50:12
  * @Github: https://github.com/Qingxuan001
  * @FilePath: \series-of-hand-writinge:\个人学习资料\leetcode-practice\doing\Array\leetcode-349.js
  */
@@ -69,5 +69,31 @@ const intersection = function (nums1, nums2) {
 
 // Set + filter
 const intersection = function (nums1, nums2) {
-    return result = [...new Set(nums1)].filter(item => new Set(nums2).has(item));
+    return result = [...new Set(nums1)].filter(v => new Set(nums2).has(v));
+};
+// 或者这样
+const intersection = function (nums1, nums2) {
+    return result = [...new Set(nums1.filter(v => nums2.includes(v)))];
+};
+// 还可以换一下转数组的方法
+const intersection = function (nums1, nums2) {
+    return Array.from(new Set(nums1.filter(v => nums2.includes(v))))
+};
+
+
+// hash
+const intersection = (nums1, nums2) => {
+    const map = {};
+    const res = []; // 结果数组
+
+    for (const num1 of nums1) {
+        map[num1] = true; // 记录nums1出现过的数
+    }
+    for (const num2 of nums2) {
+        if (map[num2]) {  // 如果nums2的这个数在nums1出现过
+            res.push(num2);  // 交集数推入res
+            map[num2] = false; // 记录改为为false，避免重复推入res
+        }
+    }
+    return res;
 };
