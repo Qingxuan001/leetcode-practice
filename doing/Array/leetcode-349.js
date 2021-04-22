@@ -3,10 +3,20 @@
  * @Date: 2021-04-20 17:27:03
  * @Description: leetcode-349--两个数组的交集  腾讯
  * @LastEditors: huohuoit
- * @LastEditTime: 2021-04-21 14:50:12
+ * @LastEditTime: 2021-04-22 17:02:25
  * @Github: https://github.com/Qingxuan001
  * @FilePath: \series-of-hand-writinge:\个人学习资料\leetcode-practice\doing\Array\leetcode-349.js
  */
+
+// Question：给定两个数组，编写一个函数来计算它们的交集。
+
+// 示例：
+
+// 输入：nums1 = [1, 2, 2, 1]，nums2 = [2, 2]
+
+// 输出：[2]
+
+// 不考虑顺序
 
 // 暴力解
 const intersection = function (nums1, nums2) {
