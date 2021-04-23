@@ -3,7 +3,7 @@
  * @Date: 2021-04-22 15:01:48
  * @Description: leetcode-146--LRU缓存机制
  * @LastEditors: huohuoit
- * @LastEditTime: 2021-04-22 22:08:49
+ * @LastEditTime: 2021-04-23 11:43:56
  * @Github: https://github.com/Qingxuan001
  * @FilePath: \series-of-hand-writinge:\个人学习资料\leetcode-practice\doing\Array\leetcode-146.js
  */
@@ -34,7 +34,6 @@ class ListNode {
         this.next = null;
     }
 }
-
 // 定义 LRUCache 
 class LRUCache {
     constructor(capacity) {
@@ -52,8 +51,8 @@ class LRUCache {
         let node = this.hash[key];  // 从哈希表中获取对应的节点
         if (node === null) return -1; // 如果哈希表中没有该节点，返回-1
         // 将该节点移动到头部（标志着最近使用）
-        this.removeFromList(node) // 先从链表中删除节点
-        this.addToHead(node)      // 再添加到链表的头部      
+        this.removeFromList(node); // 先从链表中删除节点
+        this.addToHead(node);      // 再添加到链表的头部      
         return node.value;          // 返回该节点的值 value
     }
     // put 方法
@@ -64,39 +63,67 @@ class LRUCache {
                 this.removeOldNode();            // 将最久未使用的节点删除
             }
             let newNode = new ListNode(key, value)  // 缓存容量没满，创建新节点
-            this.hash[key] = newNode  // 将新节点存入哈希表
-            this.addToHead(newNode)   // 并将新节点添加到双链表头部（更新的节点 即为 最近使用的节点）
-            this.count++              // 注意缓存的数据要加一
+            this.hash[key] = newNode;  // 将新节点存入哈希表
+            this.addToHead(newNode);   // 并将新节点添加到双链表头部（更新的节点 即为 最近使用的节点）
+            this.count++;            // 注意缓存的数据要加一
         } else {    // 哈希表中有该节点（的 key）
-            node.value = value  // 将节点的值替换
+            node.value = value; // 将节点的值替换
             // 同时将该节点移动到头部（标志着最近使用）
-            this.removeFromList(node) // 先从链表中删除节点
-            this.addToHead(node)      // 再添加到链表的头部
+            this.removeFromList(node); // 先从链表中删除节点
+            this.addToHead(node);      // 再添加到链表的头部
         }
     }
     // 删除某个节点
     removeFromList (node) {
-        let temp1 = node.prev     // 暂存它的后继节点
-        let temp2 = node.next     // 暂存它的前驱节点
-        temp1.next = temp2        // 前驱节点的next指向后继节点
-        temp2.prev = temp1        // 后继节点的prev指向前驱节点
+        let temp1 = node.prev;     // 暂存它的后继节点
+        let temp2 = node.next;     // 暂存它的前驱节点
+        temp1.next = temp2;      // 前驱节点的next指向后继节点
+        temp2.prev = temp1;     // 后继节点的prev指向前驱节点
     }
     // 移动节点到头部
     addToHead (node) {                 // 插入到虚拟头结点和真实头结点之间
-        node.prev = this.dummyHead      // node的prev指针，指向虚拟头结点
-        node.next = this.dummyHead.next // node的next指针，指向原来的真实头结点
-        this.dummyHead.next.prev = node // 原来的真实头结点的prev，指向node
-        this.dummyHead.next = node      // 虚拟头结点的next，指向node
+        node.prev = this.dummyHead;      // node的prev指针，指向虚拟头结点
+        node.next = this.dummyHead.next; // node的next指针，指向原来的真实头结点
+        this.dummyHead.next.prev = node; // 原来的真实头结点的prev，指向node
+        this.dummyHead.next = node;      // 虚拟头结点的next，指向node
     }
     // 删除最近未使用的节点
     removeOldNode () {
-        let tail = this.popTail()     // 将它从链表尾部删除
-        delete this.hash[tail.key]    // 哈希表中也将它删除
-        this.count--                  // 缓存数目-1
+        let tail = this.popTail();     // 将它从链表尾部删除
+        delete this.hash[tail.key];    // 哈希表中也将它删除
+        this.count--;                  // 缓存数目-1
     }
     popTail () {                      // 删除链表尾节点
-        let tail = this.dummyTail.prev // 通过虚拟尾节点找到它
-        this.removeFromList(tail)      // 删除该真实尾节点
-        return tail                    // 返回被删除的节点
+        let tail = this.dummyTail.prev; // 通过虚拟尾节点找到它
+        this.removeFromList(tail);      // 删除该真实尾节点
+        return tail;                    // 返回被删除的节点
+    }
+}
+
+// ES6 Map
+class LRUCache {
+    constructor(capacity) {
+        this.capacity = capacity;
+        this.map = new Map();
+    }
+    get (key) {
+        let value = this.map.get(key);
+        if (value === undefined) return -1;
+        this.map.delete(key);   // 获取 = （最近）被使用，先删除
+        this.map.set(key, value);  // 再重新插入，（最后的）表示最近被使用
+        return value;
+    }
+    put (key, value) {
+        if (this.map.has(key)) {
+            this.map.delete(key);
+        }
+        this.map.set(key, value);
+        if (this.map.size > this.capacity) {
+            // this.map.entries() 返回一个迭代器，这里只调用了一次next()
+            // 则 next().value 返回迭代器的第一个键值对(最久未使用),如[0, 'a'],所以我们取key值 value[0]
+            this.map.delete(this.map.entries().next().value[0]);
+            // 当然这里也可以用 keys()直接拿到键值
+            // this.map.delete(this.map.keys.next().value);
+        }
     }
 }
