@@ -1,7 +1,7 @@
 /*
  * @Author: huohuoit
  * @Date: 2021-04-01 14:41:44
- * @Description: Get it !
+ * @Description: leetcode　15 三数之和
  * @LastEditors: huohuoit
  * @LastEditTime: 2021-04-01 20:54:27
  * @Github: https://github.com/Qingxuan001
